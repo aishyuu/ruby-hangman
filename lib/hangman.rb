@@ -13,21 +13,28 @@ def start
   if usr_response == "start"
     puts "Starting game..."
   elsif usr_response == "continue"
-    puts "Loading Save Files..."
+    load_file
   end
 end
 
-# fits = []
-# File.foreach("hangman_words.txt") do |line|
-#   fixed = line.chomp
-#   if fixed.length.between?(5, 12)
-#     fits.push(fixed)
-#   end
-# end
+def load_file
+  puts "\nType in the file name you wish to continue from\n\n"
+  all_files = []
+  Dir.new('./saves').each do |file|
+    if file == "." || file == ".."
+      next
+    end
+    current_file = file.gsub(".yaml", "")
+    all_files.push(current_file)
+    puts current_file
+  end
 
-# test = Psych.load_file("./saves/save_1.yaml")
-# puts test["data"]["guesses"]
+  usr_response = ""
+  until all_files.include?(usr_response)
+    usr_response = gets.downcase.strip
+  end
 
-# puts File.read("./lib/ascii_text.txt")
+  puts "File chosen is #{usr_response}"
+end
 
 start
