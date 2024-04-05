@@ -1,4 +1,5 @@
-data:
+info:
   guesses: "airhep"
   lives_left: 3
   word_progress: "___i_ra"
+  word_index: 5217
