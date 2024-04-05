@@ -62,8 +62,45 @@ def load_file
 end
 
 def play_game(data = {})
-  puts data
-  puts data["info"]
+  finished = false
+  user_response = ""
+  until finished == true
+    puts "#{data[:info][:word_progress]}"
+    puts "Lives Left: #{data[:info][:lives_left]}"
+    until user_response.length == 1 || user_response == "save"
+      user_response = gets.downcase.strip
+    end
+    if user_response == "save"
+      num_files = 0
+      Dir.new('./saves').each do |file|
+        if file == "." || file == ".."
+          next
+        end
+        num_files += 1
+      end
+      File.open("./saves/save_#{num_files+1}.yaml", "w") {|file| file.write(data.to_yaml)}
+      puts "Game Saved under file 'save_#{num_files+1}'"
+    elsif !data[:info][:guesses].include?(user_response)
+      data[:info][:guesses] += user_response
+      if $fits[data[:info][:word_index]].include?(user_response)
+        $fits[data[:info][:word_index]].each_char.with_index do |letter, index|
+          if letter == user_response
+            data[:info][:word_progress][index] = user_response
+          end
+        end
+      elsif
+        data[:info][:lives_left] -= 1
+        puts "errr! wrong"
+        if data[:info][:lives_left] == 0
+          puts "Game Over"
+          finished = true
+        end
+      end
+    else
+      puts "You've guessed this before!"
+    end
+    user_response = ""
+  end
 end
 
 start

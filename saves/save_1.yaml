@@ -1,5 +1,6 @@
-info:
-  guesses: "airhep"
-  lives_left: 3
-  word_progress: "___i_ra"
-  word_index: 5217
+---
+:info:
+  :guesses: ae
+  :lives_left: 5
+  :word_progress: e__e_
+  :word_index: 3492
